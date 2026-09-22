@@ -1,0 +1,150 @@
+{
+  "_说明": "检索评测集：每题标注「正确答案在哪个文件」。用于客观计算召回率，而不是靠肉眼看输出。",
+  "_用法": "python tools/eval_retrieval.py  → 自动算出 Recall@3，输出哪些题没命中",
+  "_标注原则": "expected_sources 只填【确实包含答案】的文件；文档里没有答案的题，expected_sources 填空数组，并标 must_refuse=true",
+  "_注意": "这些问题和答案都经过文档核对，不是凭印象写的",
+
+  "questions": [
+    {
+      "id": "q01",
+      "question": "我的评测项目一共有几道题？",
+      "expected_sources": ["项目1-README.md"],
+      "must_refuse": false,
+      "note": "README 里写着「11 道题」"
+    },
+    {
+      "id": "q02",
+      "question": "评测流水线实现了哪几类评分器？",
+      "expected_sources": ["项目1-README.md"],
+      "must_refuse": false,
+      "note": "README 写着「5 类评分器」"
+    },
+    {
+      "id": "q03",
+      "question": "六类失败归因机制把失败分成了哪几类？",
+      "expected_sources": ["项目1-失败案例.md", "项目1-README.md"],
+      "must_refuse": false,
+      "note": "失败案例.md 开头就是归因表"
+    },
+    {
+      "id": "q04",
+      "question": "为什么说答案钥必须验算？",
+      "expected_sources": ["项目1-失败案例.md", "项目1-README.md"],
+      "must_refuse": false,
+      "note": "案例讲的是「我凭直觉写了答案，没验算」"
+    },
+    {
+      "id": "q05",
+      "question": "模型答对了但被评为错误，是什么原因造成的？",
+      "expected_sources": ["项目1-失败案例.md"],
+      "must_refuse": false,
+      "note": "同义词表遗漏导致的假阴性"
+    },
+    {
+      "id": "q06",
+      "question": "两个模型的成本倍数实测是多少？",
+      "expected_sources": ["项目1-模型选型报告.md"],
+      "must_refuse": false,
+      "note": "报告里给了区间"
+    },
+    {
+      "id": "q07",
+      "question": "单题成本在多次跑测之间会波动多少倍？",
+      "expected_sources": ["项目1-模型选型报告.md", "项目1-README.md"],
+      "must_refuse": false,
+      "note": "1.8 ~ 2.8 倍"
+    },
+    {
+      "id": "q08",
+      "question": "为什么会得出「不该按难度路由」这个结论？",
+      "expected_sources": ["项目1-模型选型报告.md", "项目1-README.md"],
+      "must_refuse": false,
+      "note": "因为两个模型精度零差异"
+    },
+    {
+      "id": "q09",
+      "question": "难度分层题库里包含哪几类题目？",
+      "expected_sources": ["项目1-README.md", "项目1-难题库.json"],
+      "must_refuse": false,
+      "note": "多步推理、信息不足、量词陷阱等"
+    },
+    {
+      "id": "q10",
+      "question": "逻辑量词陷阱题的设计意图是什么？",
+      "expected_sources": ["项目1-难题库.json"],
+      "must_refuse": false,
+      "note": "难题库的 design 字段"
+    },
+    {
+      "id": "q11",
+      "question": "Agent 工具调用评测一共几道题，覆盖哪几类场景？",
+      "expected_sources": ["项目2-README.md"],
+      "must_refuse": false,
+      "note": "8 题，4 类场景"
+    },
+    {
+      "id": "q12",
+      "question": "五层判分具体判的是哪五层？",
+      "expected_sources": ["项目2-README.md"],
+      "must_refuse": false,
+      "note": "工具选择、参数、答案落地、无编造(关键词)、无编造(LLM)"
+    },
+    {
+      "id": "q13",
+      "question": "关键词判分和 LLM 判分的通过率差多少？",
+      "expected_sources": ["项目2-README.md"],
+      "must_refuse": false,
+      "note": "75% vs 100%"
+    },
+    {
+      "id": "q14",
+      "question": "幻觉的触发条件是什么？",
+      "expected_sources": ["项目2-README.md", "项目2-幻觉实验.md"],
+      "must_refuse": false,
+      "note": "「我以为我知道」而不是「我知道我不知道」"
+    },
+    {
+      "id": "q15",
+      "question": "为什么说评测里最大的误差来源是尺子本身？",
+      "expected_sources": ["项目2-README.md", "项目2-幻觉实验.md"],
+      "must_refuse": false,
+      "note": "三轮实验里两轮结论被判分标准污染"
+    },
+    {
+      "id": "q16",
+      "question": "三轮幻觉实验分别得出了什么结论？",
+      "expected_sources": ["项目2-幻觉实验.md", "项目2-README.md"],
+      "must_refuse": false,
+      "note": "重复采样无效 → 拆变体 20% → 修标尺归零"
+    },
+    {
+      "id": "q17",
+      "question": "temperature 设为 0 能保证结果稳定吗？",
+      "expected_sources": ["项目2-README.md"],
+      "must_refuse": false,
+      "note": "不能，同一道题两次跑测结果不同"
+    },
+
+    {
+      "id": "q18",
+      "question": "我的项目一共花了多少钱？",
+      "expected_sources": [],
+      "must_refuse": true,
+      "note": "文档里没有总花费这个数字"
+    },
+    {
+      "id": "q19",
+      "question": "我用了哪家公司的 GPU 服务器？",
+      "expected_sources": [],
+      "must_refuse": true,
+      "note": "文档里绝对没有"
+    },
+    {
+      "id": "q20",
+      "question": "项目的作者今年多大？",
+      "expected_sources": [],
+      "must_refuse": true,
+      "note": "文档里没有年龄信息"
+    }
+  ]
+}
