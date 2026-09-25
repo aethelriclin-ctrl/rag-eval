@@ -1,12 +1,18 @@
-"""向量化模块（RAG 的第 ② 步）—— **已写好，但当前尚未接进检索链路**。
+"""向量化模块（RAG 的第 ② 步）—— 用于"语义检索"路线。
 
-📌 当前状态（重要）：
-    系统的检索用的是 `bm25.py`（字面匹配），本模块**没有被调用**。
-    原因：DeepSeek 官方不提供 embedding 接口（已查证官方 API 文档），
-    试过的第三方中转 key 地址未通，所以先用 BM25 把链路跑通。
+📌 当前状态（2026-09-26 更新）：
+    原先卡在"没有可用的 embedding 接口"——DeepSeek 官方不提供（已查证），
+    第三方中转 key 地址也未通。所以第 1、2 层一直用 BM25（字面匹配）。
 
-    等拿到可用的 embedding 后，把它接进 `factory.py` 的 VectorRetriever，
-    就能和 BM25 做对照实验——**这正是本项目"下一步"里的第一项。**
+    现在改用 **阿里云百炼（DashScope）的 `text-embedding-v3`**：
+      · 兼容 OpenAI SDK（写法不变）
+      · base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      · 单价 0.0005 元/千 token，**新用户各 100 万 token 免费额度（90 天）**
+    来源（官方文档）：
+      https://www.alibabacloud.com/help/zh/model-studio/embedding-interfaces-compatible-with-openai
+
+    ⭐ 有了它，就能做本项目最想要的那组对照实验：
+       **同一批题，字面匹配（BM25） vs 语义匹配（向量）——答案正确率差多少？**
 
 要解决的事：把每一块文本变成一个"向量"（一串数字），
             这样计算机才能比较两段文本"意思像不像"。
@@ -28,9 +34,12 @@ from openai import OpenAI
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VECTOR_CACHE = os.path.join(BASE_DIR, "data", "vectors.json")
 
-# ⚠️ 模型名可能要改：不同平台的 embedding 模型名不一样。
-#    跑的时候如果报"model not found"，把这个字符串换成平台文档里的名字。
-EMBED_MODEL = "deepseek-embedding"
+# ---- 阿里云百炼（DashScope）配置 ----
+# ⚠️ 各地域的 base_url 不同；这是国内通用的经典地址（官方说"现有域名仍可正常使用"）。
+EMBED_BASE_URL = os.environ.get(
+    "EMBED_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1")
+# ⚠️ 模型名：华北2（北京）地域应换成 text-embedding-v4；这里默认用 v3。
+EMBED_MODEL = os.environ.get("EMBED_MODEL", "text-embedding-v3")
 
 _client = None
 
@@ -43,16 +52,19 @@ def get_client():
         如果环境变量没设，会直接抛 "Missing credentials"，
         把"你没设 API Key"这个友好提示给盖掉了。
         惰性创建能让错误信息更清楚。
+
     """
     global _client
     if _client is None:
-        key = os.environ.get("DEEPSEEK_API_KEY")
+        # ⚠️ embedding 用的是阿里云百炼的 key，**不是** DeepSeek 的 key。
+        key = os.environ.get("DASHSCOPE_API_KEY")
         if not key:
             raise RuntimeError(
-                "没读到 DEEPSEEK_API_KEY。在 PowerShell 里先执行：\n"
-                '  $env:DEEPSEEK_API_KEY="你的key"'
+                "没读到 DASHSCOPE_API_KEY（阿里云百炼的 key，不是 DeepSeek 的）。\n"
+                "在 PowerShell 里先执行：\n"
+                '  $env:DASHSCOPE_API_KEY="sk-你的百炼key"'
             )
-        _client = OpenAI(api_key=key, base_url="https://api.deepseek.com")
+        _client = OpenAI(api_key=key, base_url=EMBED_BASE_URL)
     return _client
 
 
@@ -62,11 +74,13 @@ def embed_one(text):
     return resp.data[0].embedding
 
 
-def embed_batch(texts, batch_size=16):
+def embed_batch(texts, batch_size=10):
     """批量向量化。
 
     为什么要批量：一次请求带多条文本，比循环单条快得多（也省往返开销）。
-    batch_size 不要太大，避免单次请求体过大被拒。
+
+    ⚠️ batch_size=10 不是随便定的：百炼文档写 "最大行数 10"（text-embedding-v3），
+       超过会被拒。**别按"性能"去调大它，要按平台限制。**
     """
     vectors = []
     for i in range(0, len(texts), batch_size):

@@ -23,18 +23,32 @@ import sys
 
 from openai import OpenAI
 
-# 待探测的候选：(名字, base_url, [候选模型名...])
+# 待探测的候选：每家可以给多个 base_url（因为地址常常要靠试）
+# 结构：(名字, [base_url 列表], [候选模型名...], 读哪个环境变量当 key)
 CANDIDATES = [
     (
-        "七牛云 AI Studio",
-        os.environ.get("QWEN_BASE", "https://api.qnaigc.com/v1"),
-        ["bge-m3", "text-embedding-v3", "bge-large-zh-v1.5", "embedding-3"],
+        "阿里云百炼 DashScope（2026-09-26 文档查证）",
+        ["https://dashscope.aliyuncs.com/compatible-mode/v1"],
+        ["text-embedding-v3", "text-embedding-v4", "text-embedding-v2"],
+        "DASHSCOPE_API_KEY",
+    ),
+    (
+        "七牛云 AI",
+        [
+            "https://api.qnaigc.com/v1",
+            "https://ai.qiniuapi.com/v1",
+            "https://openai.qiniu.com/v1",
+        ],
+        ["bge-m3", "text-embedding-v3", "bge-large-zh-v1.5",
+         "embedding-3", "text-embedding-ada-002"],
+        "QWEN_KEY",
     ),
     (
         "中转站",
-        os.environ.get("RELAY_BASE", ""),
+        [os.environ.get("RELAY_BASE", "")],
         ["text-embedding-3-small", "text-embedding-3-large",
          "text-embedding-ada-002", "bge-m3", "embedding-3"],
+        "RELAY_KEY",
     ),
 ]
 
@@ -70,26 +84,33 @@ def main():
 
     any_ok = False
 
-    for label, base_url, models in CANDIDATES:
-        key_name = "QWEN_KEY" if "七牛" in label else "RELAY_KEY"
+    for label, base_urls, models, key_name in CANDIDATES:
         api_key = os.environ.get(key_name)
 
         print(f"\n【{label}】")
-        print(f"  base_url : {base_url or '（未设置）'}")
-        print(f"  api_key  : {mask(api_key)}")
+        print(f"  api_key（变量名 {key_name}）: {mask(api_key)}")
 
-        if not api_key or not base_url:
-            print(f"  ⏭️  跳过（需要设置环境变量 {key_name}"
-                  f"{' 和 RELAY_BASE' if '中转' in label else ''}）")
+        if not api_key:
+            print(f"  ⏭️  跳过（需要设置环境变量 {key_name}）")
             continue
 
-        for model in models:
-            ok, detail = try_one(label, base_url, api_key, model)
-            print(f"  {model:<26} {detail}")
-            if ok:
-                any_ok = True
-                print(f"\n  ⭐ 记住这个组合：base_url={base_url}  model={model}")
-                break        # 这家找到一个能用的就够了
+        for base_url in base_urls:
+            if not base_url:
+                print("  ⏭️  跳过（地址未设置）")
+                continue
+            print(f"  base_url : {base_url}")
+            for model in models:
+                ok, detail = try_one(label, base_url, api_key, model)
+                print(f"    {model:<26} {detail}")
+                if ok:
+                    any_ok = True
+                    print(f"\n  ⭐⭐ 记住这个组合：")
+                    print(f"      base_url = {base_url}")
+                    print(f"      model    = {model}")
+                    print(f"      key 变量 = {key_name}")
+                    break        # 这个地址找到一个能用的就够了
+            if any_ok:
+                break            # 这家已经找到了，不用再试别的地址
 
     print("\n" + "=" * 66)
     if any_ok:
