@@ -7,6 +7,12 @@ docs/
 # 立项讨论稿（内部备忘，非项目文档）
 项目4-方案讨论.md
 
+# 结论审计与自查脚本（2026-09-26 决定：留本地复盘，不上传）
+# 审计稿里全是"我的推断""我错了"这类自我批判，是复盘用的，不是展示用的
+结论审计.md
+tools/check_audit_counts.py
+tools/check_readme_claims.py
+
 # Python
 __pycache__/
 *.py[cod]

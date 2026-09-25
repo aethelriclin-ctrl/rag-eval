@@ -269,6 +269,7 @@ def main():
     with open(out, "w", encoding="utf-8") as f:
         json.dump({
             "retriever": factory.RETRIEVER, "top_k": TOP_K, "llm_judge": use_llm,
+            "rewrite": use_rewrite, "limit": limit, "n_questions": len(questions),
             "summary": {
                 "answerable": n_ans,
                 "kw_coverage_mean": kw_cov_sum / n_ans if n_ans else None,
