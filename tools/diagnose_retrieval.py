@@ -115,6 +115,30 @@ def main():
     print("  · 若「⭐ 实际 top-K 覆盖」低 → 问题在【排序】：好块被挤出去了")
     print("  · 若「⭐ 覆盖高但模型仍答不出」 → 问题在【生成端提示词】")
 
+    # 落盘：文件名带时间戳，避免覆盖（本项目踩过"旧结果被新实验冲掉"的坑）
+    import json as _json
+    import time as _time
+    data_dir = os.path.join(BASE_DIR, "data")
+    os.makedirs(data_dir, exist_ok=True)
+    stamp = _time.strftime("%Y%m%d-%H%M%S")
+    out = os.path.join(data_dir, f"diagnose_k{K}_{stamp}.json")
+    valid_ranks = sorted(x for x in ranks_all if x < 9999)
+    with open(out, "w", encoding="utf-8") as f:
+        _json.dump({
+            "retriever": factory.RETRIEVER,
+            "top_k": K,
+            "rewrite": use_rewrite,
+            "total_points": total_pts,
+            "found_in_index": found_in_index,
+            "topk_points_hit": topk_pts_hit,
+            "topk_points_total": topk_pts_total,
+            "topk_coverage": (topk_pts_hit / topk_pts_total) if topk_pts_total else None,
+            "rank_min": valid_ranks[0] if valid_ranks else None,
+            "rank_median": valid_ranks[len(valid_ranks) // 2] if valid_ranks else None,
+            "rank_max": valid_ranks[-1] if valid_ranks else None,
+        }, f, ensure_ascii=False, indent=2)
+    print(f"\n原始结果已写入：{out}")
+
 
 if __name__ == "__main__":
     main()

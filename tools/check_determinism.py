@@ -92,6 +92,23 @@ def main():
     print("  · 生成不一致 → 随机性来自生成端 → **温度=0 也不确定，结论要写'单次跑测不可靠'**")
     print("  · 两者都一致 → 那两次跑测的差异另有原因，要回去查评测脚本")
 
+    # 落盘：文件名带时间戳，避免覆盖
+    import json as _json
+    import time as _time
+    data_dir = os.path.join(BASE_DIR, "data")
+    os.makedirs(data_dir, exist_ok=True)
+    stamp = _time.strftime("%Y%m%d-%H%M%S")
+    out = os.path.join(data_dir, f"determinism_n{N}_{stamp}.json")
+    with open(out, "w", encoding="utf-8") as f:
+        _json.dump({
+            "n_rounds": N,
+            "questions": QUESTIONS,
+            "rewrite_varies": rewrite_varies,
+            "gen_varies": gen_varies,
+            "total_questions": len(QUESTIONS),
+        }, f, ensure_ascii=False, indent=2)
+    print(f"\n原始结果已写入：{out}")
+
 
 if __name__ == "__main__":
     main()

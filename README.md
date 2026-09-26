@@ -20,7 +20,9 @@
 
 ## 一句话结论
 
-> 知识库是我自己两个项目的文档（7 个文件、约 5 万字，切成 **103 块**）。
+> 知识库是我自己两个项目的文档（**7 个文件、42,114 字**，切成 **103 块**）。
+> （这两个数可用 `rag/splitter.py` 的 `load_all_docs()` 直接数出来——
+> 原先写的是"约 5 万字"，**实测 4.2 万，偏高了一档**，已按实测改正。）
 >
 > **最重要的发现是一个反直觉的现象**：
 > 模型反复回答"资料中没有相关信息"，但答案明明在知识库里。
@@ -589,6 +591,10 @@ python tools\eval_answer.py --rewrite    # 有改写
 
 # 看单题检索分数与排名变化
 python tools\check_rewrite_effect.py
+
+# 下面两条不花钱（纯检索/纯计算），且会落盘到 data/
+python tools\diagnose_retrieval.py --k 5   # -> data/diagnose_k5_<时间戳>.json
+python tools\check_determinism.py          # -> data/determinism_n3_<时间戳>.json
 ```
 
 > **⚠️ 每跑一次都要花钱**（约 0.01~0.03 元/轮）且结果会波动
@@ -596,6 +602,25 @@ python tools\check_rewrite_effect.py
 
 **结果文件自带配置**：每次落盘的 JSON 记录 `retriever` / `top_k` / `llm_judge` / **`rewrite`** / `limit`。
 **——`rewrite` 这个字段是我踩坑之后补的**：在那之前，跑完一轮根本分不清它是哪种配置。
+
+### 哪些数字有落盘文件可核
+
+**这份文档里的关键数字，绝大多数都能指回 `data/` 下的一个文件**：
+
+| 数字 | 对应文件 |
+| --- | --- |
+| 检索 Recall@3 17/17、口语改写 26/28、按位置 7/7/7/5 | `eval_retrieval_result.json` / `eval_phrasing_result.json` |
+| 字面 vs 语义对照（G6/G7 分歧） | `compare_retrieval_result.json` |
+| 答案正确率各组均值与逐题值 | `eval_answer_<时间戳>.json`（11 次 17 题 + 3 题试点） |
+| 跑测间波动 2.9 个点 | `variance_20260923-235840.json` |
+| 决策 84/85、漏查 1/85 | `agentic_20260924-172533.json` / `-173130.json` |
+| 决策 3 轮零翻转、检索轮数变化 | `decision_stability_20260924-174342.json` |
+| top-5 覆盖 80%、含答案块最大排名 74 | `diagnose_k5_<时间戳>.json` |
+| 改写固化后 0/3 不一致、生成 3/3 不一致 | `determinism_n3_<时间戳>.json` |
+
+> **`diagnose` 与 `determinism` 这两项原先是"只打印不落盘"的**——
+> 也就是说文档里引用的 80%、74、0/3、3/3 当时**只有屏幕输出、没有文件**。
+> **已给两个脚本加上时间戳落盘，现在可核了。**
 
 ---
 
