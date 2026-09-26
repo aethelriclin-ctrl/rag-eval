@@ -1,0 +1,11 @@
+{
+  "n_rounds": 3,
+  "questions": [
+    "评测流水线实现了哪几类评分器？",
+    "六类失败归因机制把失败分成了哪几类？",
+    "我的评测项目一共有几道题？"
+  ],
+  "rewrite_varies": 0,
+  "gen_varies": 3,
+  "total_questions": 3
+}

@@ -1,0 +1,13 @@
+{
+  "retriever": "bm25",
+  "top_k": 5,
+  "rewrite": false,
+  "total_points": 44,
+  "found_in_index": 44,
+  "topk_points_hit": 35,
+  "topk_points_total": 44,
+  "topk_coverage": 0.7954545454545454,
+  "rank_min": 1,
+  "rank_median": 1,
+  "rank_max": 74
+}

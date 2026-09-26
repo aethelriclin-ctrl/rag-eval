@@ -1,0 +1,191 @@
+{
+  "n_rounds": 3,
+  "round_means": [
+    0.8352941176470589,
+    0.8352941176470589,
+    0.8058823529411765
+  ],
+  "mean": 0.8254901960784314,
+  "per_question": [
+    {
+      "id": "q01",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q02",
+      "must_refuse": false,
+      "coverages": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    {
+      "id": "q03",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q04",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q05",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q06",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q07",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q08",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q09",
+      "must_refuse": false,
+      "coverages": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "id": "q10",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        0.5
+      ]
+    },
+    {
+      "id": "q11",
+      "must_refuse": false,
+      "coverages": [
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "id": "q12",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q13",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q14",
+      "must_refuse": false,
+      "coverages": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "q15",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q16",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q17",
+      "must_refuse": false,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q18",
+      "must_refuse": true,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q19",
+      "must_refuse": true,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "q20",
+      "must_refuse": true,
+      "coverages": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ]
+}

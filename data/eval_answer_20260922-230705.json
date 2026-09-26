@@ -1,0 +1,88 @@
+{
+  "retriever": "bm25",
+  "top_k": 5,
+  "llm_judge": false,
+  "summary": {
+    "answerable": 3,
+    "kw_coverage_mean": 0.3333333333333333,
+    "llm_coverage_mean": null,
+    "citation_ok": 1,
+    "citation_total": 3,
+    "refused_ok": 0,
+    "refusable": 0
+  },
+  "rows": [
+    {
+      "id": "q01",
+      "question": "我的评测项目一共有几道题？",
+      "answer": "资料中没有相关信息（没有明确给出评测项目的总题数）。\n\n可供参考的片段：\n- **依据资料 2**：提到\"第一次跑测（2 道题）\"，说明首次跑测涉及 2 道题。\n- **依据资料 3**：提到\"我犯过两次同样的错（id 1 和 id 11）\"，出现 id 11，暗示题目编号至少到 11。\n- **依据资料 3、5**：出现 81.8%、100% 等分数，但资料未说明其对应的题目总数。\n\n综合来看，资料只能推断\"至少 11 道题\"（若 81.8% = 9/11 则可能是 11 道），但并未明确写出总题数，因此无法据资料给出确切答案。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 786,
+        "tokens_out": 644
+      },
+      "kw_coverage": 1.0,
+      "kw_hit": [
+        "11 道"
+      ],
+      "kw_miss": [],
+      "cites": [
+        2,
+        3,
+        5
+      ],
+      "cite_ok": true,
+      "coverage_in_cited": 1.0
+    },
+    {
+      "id": "q02",
+      "question": "评测流水线实现了哪几类评分器？",
+      "answer": "资料中没有相关信息。  \n依据资料 1 只提到“多类型评分器”，资料 3、4 也只提到评分器判错/评分器缺陷，但都未列出评测流水线具体实现了哪几类评分器。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 693,
+        "tokens_out": 301
+      },
+      "kw_coverage": 0.0,
+      "kw_hit": [],
+      "kw_miss": [
+        "5 类",
+        "exact",
+        "code",
+        "json"
+      ],
+      "cites": [
+        1,
+        3,
+        4
+      ],
+      "cite_ok": false,
+      "coverage_in_cited": 0.0
+    },
+    {
+      "id": "q03",
+      "question": "六类失败归因机制把失败分成了哪几类？",
+      "answer": "资料中没有相关信息。  \n依据资料 1、4、5，只能看到“六条失败记录里没有一次是模型的错”，但没有列出“六类失败归因机制”具体把失败分成了哪几类。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 650,
+        "tokens_out": 224
+      },
+      "kw_coverage": 0.0,
+      "kw_hit": [],
+      "kw_miss": [
+        "能力不足",
+        "格式不合规",
+        "评分器误判",
+        "题目歧义"
+      ],
+      "cites": [
+        1,
+        4,
+        5
+      ],
+      "cite_ok": false,
+      "coverage_in_cited": 0.0
+    }
+  ]
+}

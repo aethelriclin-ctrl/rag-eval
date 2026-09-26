@@ -1,14 +1,12 @@
-# 生成的索引与结果（体积大，且可由源码重新生成）
-data/
+# 本地文件（不纳入版本库）
+local/
 
 # 知识库文档（由 setup.py 从项目 1/2 复制而来；源头在各自的仓库里）
 docs/
 
-# 本地文件（不纳入版本库）
-项目4-方案讨论.md
-结论审计.md
-tools/check_audit_counts.py
-tools/check_readme_claims.py
+# 生成的索引（体积大，可由源码重新生成）
+data/index_bm25.json
+data/index_vector.npz
 
 # Python
 __pycache__/

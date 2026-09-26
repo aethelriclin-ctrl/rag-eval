@@ -1,0 +1,89 @@
+{
+  "retriever": "bm25",
+  "top_k": 5,
+  "llm_judge": false,
+  "summary": {
+    "answerable": 3,
+    "kw_coverage_mean": 0.9166666666666666,
+    "llm_coverage_mean": null,
+    "citation_ok": 2,
+    "citation_total": 3,
+    "refused_ok": 0,
+    "refusable": 0
+  },
+  "rows": [
+    {
+      "id": "q01",
+      "question": "我的评测项目一共有几道题？",
+      "answer": "依据资料 3、4、5：\n\n- 项目 1 的基础题库 `cases.json` 有 **11 道题**（资料 3、5）。\n- 另有难度分层题库 `cases_hard.json` 有 **6 道题**（资料 4、5）。\n- 资料 4 也提到“两个模型在 **17 道题** 上”对比。\n\n所以如果问的是项目 1（大模型评测流水线），一共是 **11 + 6 = 17 道题**。  \n如果问的是资料 2 中的项目 2（工具调用评测），则是 **8 道题**。\n\n依据资料 2、3、4、5。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 1466,
+        "tokens_out": 1033
+      },
+      "kw_coverage": 1.0,
+      "kw_hit": [
+        "11 道"
+      ],
+      "kw_miss": [],
+      "cites": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "cite_ok": true,
+      "coverage_in_cited": 1.0
+    },
+    {
+      "id": "q02",
+      "question": "评测流水线实现了哪几类评分器？",
+      "answer": "依据资料 1、5，评测流水线实现了 **4 类评分器**：\n\n1. `exact`：用于算术推理，精确匹配（剥首尾空白与标点）。\n2. `code`：用于代码生成，真的执行代码，再调用函数验证行为。\n3. `contains_any` / `contains_all`：用于事实问答，关键词命中，支持同义词组。\n4. `json`：用于格式约束，先剥 markdown 标记、再解析 JSON、再比对内容。\n\n依据资料 1 的“四类任务，四种评分器”表格，以及资料 5 中对 `json` 评分器的说明。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 1201,
+        "tokens_out": 639
+      },
+      "kw_coverage": 0.75,
+      "kw_hit": [
+        "exact",
+        "code",
+        "json"
+      ],
+      "kw_miss": [
+        "5 类"
+      ],
+      "cites": [
+        1,
+        5
+      ],
+      "cite_ok": false,
+      "coverage_in_cited": 0.75
+    },
+    {
+      "id": "q03",
+      "question": "六类失败归因机制把失败分成了哪几类？",
+      "answer": "资料中没有“六类失败归因机制”这一说法。资料中的失败归因机制是**四类**：\n\n1. **能力不足**——模型确实不会  \n2. **格式不合规**——模型知道答案，但没按要求的格式输出  \n3. **评分器误判**——内容是对的，但评分器判错了（False Negative）  \n4. **题目歧义**——题目本身有问题，多个答案都站得住  \n\n依据资料 1、3；资料 2 也说明归因标签沿用这四类。资料中提到“六条记录”是指失败案例库中的记录数量，并不是把失败分成六类。",
+      "must_refuse": false,
+      "usage": {
+        "tokens_in": 1564,
+        "tokens_out": 663
+      },
+      "kw_coverage": 1.0,
+      "kw_hit": [
+        "能力不足",
+        "格式不合规",
+        "评分器误判",
+        "题目歧义"
+      ],
+      "kw_miss": [],
+      "cites": [
+        1,
+        2,
+        3
+      ],
+      "cite_ok": true,
+      "coverage_in_cited": 1.0
+    }
+  ]
+}

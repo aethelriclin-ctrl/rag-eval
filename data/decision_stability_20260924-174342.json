@@ -1,0 +1,284 @@
+{
+  "n_rounds": 3,
+  "flips": 0,
+  "total": 17,
+  "round_accuracy": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "records": [
+    {
+      "id": "a01",
+      "question": "我的评测项目一共有几道题？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "a02",
+      "question": "评测流水线实现了哪几类评分器？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "a03",
+      "question": "六类失败归因机制把失败分成了哪几类？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        3,
+        3,
+        2
+      ]
+    },
+    {
+      "id": "a04",
+      "question": "Agent 工具调用评测一共几道题，覆盖哪几类场景？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "id": "a05",
+      "question": "关键词判分和 LLM 判分的通过率差多少？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "a06",
+      "question": "单题成本在多次跑测之间会波动多少倍？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "a07",
+      "question": "幻觉的触发条件是什么？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        4,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "a08",
+      "question": "我做过哪几个项目？分别是什么方向？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        4,
+        5,
+        4
+      ]
+    },
+    {
+      "id": "b01",
+      "question": "1+1 等于几？",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "b02",
+      "question": "中国现在几点？",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "b03",
+      "question": "把「你好世界」翻译成英文。",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "b04",
+      "question": "Python 里 list 和 tuple 最主要的区别是什么？",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "b05",
+      "question": "帮我写一个把字符串反转的 Python 函数。",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "b06",
+      "question": "3 的 5 次方是多少？",
+      "expect_tool": false,
+      "calls": [
+        false,
+        false,
+        false
+      ],
+      "flips": false,
+      "rounds": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "c01",
+      "question": "我的项目一共花了多少钱？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        3,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "c02",
+      "question": "我用了哪家公司的 GPU 服务器？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        3,
+        3
+      ]
+    },
+    {
+      "id": "c03",
+      "question": "项目的作者今年多大？",
+      "expect_tool": true,
+      "calls": [
+        true,
+        true,
+        true
+      ],
+      "flips": false,
+      "rounds": [
+        2,
+        2,
+        2
+      ]
+    }
+  ]
+}
