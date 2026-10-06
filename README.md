@@ -151,6 +151,10 @@ rag-eval/
 ## 怎么跑
 
 ```powershell
+# 0. 装依赖（Python 3.10+）
+pip install -r requirements.txt
+
+# 1. 设 API Key
 $env:DEEPSEEK_API_KEY="你的key"
 
 python setup.py                     # ① 准备知识库
@@ -178,8 +182,8 @@ $env:DASHSCOPE_API_KEY="sk-..."     # 阿里云百炼的 key
 python tools\compare_retrieval.py   # 一键跑完对照实验
 ```
 
-依赖：Python 3.x + `openai`。
-**检索本身不需要 numpy**（BM25 是纯 Python 实现）——**只有向量检索需要 `pip install numpy`**。
+依赖：**Python 3.10+** + `openai` + `numpy`（见 `requirements.txt`，安装：`pip install -r requirements.txt`）。
+**检索本身不需要 numpy**（BM25 是纯 Python 实现）——**只有向量检索需要 numpy**。
 
 ---
 
